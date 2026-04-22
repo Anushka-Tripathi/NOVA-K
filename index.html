@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Nova-K — Orbital Vacations | Luxury Space Tourism</title>
+  <meta name="description" content="Nova-K offers humanity's most exclusive travel experiences — orbital stays above Earth, Lunar surface expeditions, and Mars colony visits. Book your place among the stars." />
+  <meta name="keywords"    content="space tourism, orbital vacation, luxury space travel, moon trip, mars vacation, Nova-K" />
+  <meta name="author"      content="Nova-K Space Tourism" />
+  <meta name="robots"      content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Nova-K — Orbital Vacations" />
+  <meta property="og:description" content="Book your seat among the stars. Orbital stays, Lunar surface expeditions, Mars colony visits." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://nova-k.space" />
+  <meta property="og:image"       content="https://nova-k.space/og.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Nova-K — Orbital Vacations" />
+  <meta name="twitter:description" content="Luxury space tourism. Earth orbit to Mars colony." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="nova-k.css" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Nova-K Space Tourism",
+    "url": "https://nova-k.space",
+    "description": "Luxury orbital vacation and space tourism company offering Earth orbit, Lunar, and Mars expeditions.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kennedy Space Complex",
+      "addressRegion": "FL",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "28.5",
+      "longitude": "-80.6"
+    }
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════
+       DECORATIVE / AMBIENT ELEMENTS
+  ══════════════════════════════════════════ -->
+
+  <!-- Custom cursor (non-interactive, decorative) -->
+  <div id="cur"      aria-hidden="true"></div>
+  <div id="cur-ring" aria-hidden="true"></div>
+
+  <!-- Nebula background blobs -->
+  <div id="nebula" aria-hidden="true">
+    <div class="nebula-blob" style="width:700px;height:500px;left:-10%;top:5%;background:radial-gradient(ellipse,rgba(62,255,216,0.055),transparent 70%);--bd:18s;--bx:60px;--by:40px;--bs:1.15"></div>
+    <div class="nebula-blob" style="width:800px;height:600px;right:-15%;top:10%;background:radial-gradient(ellipse,rgba(74,100,220,0.07),transparent 70%);--bd:24s;--bx:-50px;--by:60px;--bs:1.1"></div>
+    <div class="nebula-blob" style="width:600px;height:500px;left:20%;top:60%;background:radial-gradient(ellipse,rgba(200,100,255,0.04),transparent 70%);--bd:20s;--bx:70px;--by:-40px;--bs:1.2"></div>
+    <div class="nebula-blob" style="width:500px;height:400px;right:10%;bottom:15%;background:radial-gradient(ellipse,rgba(200,169,110,0.05),transparent 70%);--bd:22s;--bx:-60px;--by:30px;--bs:1.08"></div>
+  </div>
+
+  <!-- Stars canvas -->
+  <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+
+  <!-- ══════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════ -->
+  <nav id="nav" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+
+        <!-- Brand mark -->
+        <a href="/" class="logo" aria-label="Nova-K Space Tourism — Home">
+          <div class="logo-orb" aria-hidden="true"></div>
+          Nova-K
+        </a>
+
+        <!-- Desktop nav links -->
+        <ul class="nav-links" role="list">
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#schedule">Flights</a></li>
+          <li><a href="#seats">Seat Map</a></li>
+          <li><a href="#experience">Experience</a></li>
+        </ul>
+
+        <a href="#seats" class="btn-nav" aria-label="Book orbital vacation">Book a Voyage ↗</a>
+
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="ham" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mob-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile fullscreen menu -->
+  <div class="mob-menu" id="mob-menu" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="#destinations" class="ml">Destinations</a>
+    <a href="#schedule"     class="ml">Flights</a>
+    <a href="#seats"        class="ml">Seat Map</a>
+    <a href="#experience"   class="ml">Experience</a>
+    <a href="#seats" class="btn-primary ml" style="font-size:12px">Book a Voyage</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="hero" aria-labelledby="h-headline">
+
+    <!-- Parallax Earth -->
+    <div id="pp" aria-hidden="true">
+      <div class="p-earth">
+        <div class="p-atmo"></div>
+      </div>
+      <!-- Orbital rings with satellites -->
+      <div class="p-orbit" style="width:340px;height:340px;--od:10s">
+        <div class="p-orbit-dot" style="--dr:170px;--ds:5px;--dc:var(--gold)"></div>
+      </div>
+      <div class="p-orbit" style="width:430px;height:430px;--od:18s;border-color:rgba(62,255,216,0.05)">
+        <div class="p-orbit-dot" style="--dr:215px;--ds:4px;--dc:var(--teal)"></div>
+      </div>
+      <div class="p-orbit" style="width:510px;height:510px;--od:30s;border-color:rgba(255,255,255,0.025);animation-direction:reverse">
+        <div class="p-orbit-dot" style="--dr:255px;--ds:3px;--dc:rgba(255,255,255,0.45)"></div>
+      </div>
+    </div>
+
+    <!-- Parallax spacecraft -->
+    <div id="ps" aria-label="Nova-K orbital spacecraft">
+      <svg class="ship-w" viewBox="0 0 180 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="Futuristic Nova-K spacecraft with glowing teal engines">
+        <defs>
+          <linearGradient id="sb" x1="40" y1="0" x2="140" y2="260" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stop-color="#1E2840" />
+            <stop offset="60%"  stop-color="#0E1530" />
+            <stop offset="100%" stop-color="#050810" />
+          </linearGradient>
+          <radialGradient id="cg" cx="38%" cy="32%" r="62%">
+            <stop offset="0%"   stop-color="rgba(120,200,255,0.35)" />
+            <stop offset="45%"  stop-color="rgba(50,100,200,0.2)" />
+            <stop offset="100%" stop-color="rgba(4,10,40,0.85)" />
+          </radialGradient>
+          <linearGradient id="wg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#18223A" />
+            <stop offset="100%" stop-color="#07090F" />
+          </linearGradient>
+          <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#1C2445" />
+            <stop offset="100%" stop-color="#080B18" />
+          </linearGradient>
+          <filter id="glow-engine">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        <!-- Hull -->
+        <path d="M90 16 C108 16 128 54 132 108 L132 208 C132 228 118 248 90 256 C62 248 48 228 48 208 L48 108 C52 54 72 16 90 16Z"
+              fill="url(#sb)" stroke="rgba(200,169,110,0.2)" stroke-width="1" />
+        <!-- Cockpit viewport -->
+        <ellipse cx="90" cy="72" rx="26" ry="34" fill="url(#cg)" stroke="rgba(62,255,216,0.25)" stroke-width="1" />
+        <ellipse cx="82" cy="62" rx="9"  ry="13" fill="rgba(255,255,255,0.07)" />
+        <!-- Wings -->
+        <path d="M48 150 L16 192 L16 218 L48 200Z"   fill="url(#wg)" stroke="rgba(200,169,110,0.15)" stroke-width="1" />
+        <path d="M132 150 L164 192 L164 218 L132 200Z" fill="url(#wg)" stroke="rgba(200,169,110,0.15)" stroke-width="1" />
+        <!-- Engine pods -->
+        <rect x="20"  y="200" width="18" height="38" rx="4" fill="url(#eg)" stroke="rgba(62,255,216,0.15)" stroke-width="1" />
+        <rect x="142" y="200" width="18" height="38" rx="4" fill="url(#eg)" stroke="rgba(62,255,216,0.15)" stroke-width="1" />
+        <rect x="78"  y="244" width="24" height="42" rx="5" fill="url(#eg)" stroke="rgba(62,255,216,0.2)"  stroke-width="1" />
+        <!-- Hull panel lines -->
+        <line x1="90" y1="108" x2="90" y2="236" stroke="rgba(200,169,110,0.1)" stroke-width="1" />
+        <line x1="62" y1="124" x2="118" y2="124" stroke="rgba(200,169,110,0.07)" stroke-width="1" />
+        <line x1="60" y1="154" x2="120" y2="154" stroke="rgba(200,169,110,0.07)" stroke-width="1" />
+        <line x1="58" y1="184" x2="122" y2="184" stroke="rgba(200,169,110,0.07)" stroke-width="1" />
+        <!-- Antenna -->
+        <line x1="90" y1="16" x2="90" y2="2" stroke="rgba(62,255,216,0.5)" stroke-width="1.5" />
+        <circle cx="90" cy="2" r="2.5" fill="var(--teal)" filter="url(#glow-engine)" opacity=".9" />
+        <!-- Engine exhaust glows -->
+        <ellipse cx="29"  cy="238" rx="6" ry="2.5" fill="var(--teal)" opacity=".8" filter="url(#glow-engine)" />
+        <ellipse cx="151" cy="238" rx="6" ry="2.5" fill="var(--teal)" opacity=".8" filter="url(#glow-engine)" />
+        <ellipse cx="90"  cy="286" rx="8" ry="3"   fill="var(--teal)" opacity=".9" filter="url(#glow-engine)" />
+        <!-- Wing navigation lights -->
+        <circle cx="16"  cy="205" r="2" fill="var(--gold)" opacity=".6" />
+        <circle cx="164" cy="205" r="2" fill="var(--gold)" opacity=".6" />
+      </svg>
+
+      <div class="exhaust" aria-hidden="true">
+        <div class="ex-f" style="width:7px;--eh:26px;--ef:.32s"></div>
+        <div class="ex-f" style="width:10px;--eh:42px;--ef:.48s"></div>
+        <div class="ex-f" style="width:7px;--eh:24px;--ef:.38s"></div>
+      </div>
+    </div>
+
+    <!-- Hero copy -->
+    <div class="container">
+      <div class="hero-c">
+
+        <!-- Prominent brand wordmark -->
+        <p class="hero-wordmark">Nova&#8209;K</p>
+
+        <div class="hero-tag" aria-label="Section context">
+          <div class="hero-tag-line" aria-hidden="true"></div>
+          Orbital Vacations
+          <div class="hero-tag-line r" aria-hidden="true"></div>
+        </div>
+
+        <h1 class="h-title" id="h-headline">
+          Beyond<br /><em>Earth's</em><br />Horizon
+        </h1>
+
+        <p class="h-sub">
+          The universe's most exclusive travel experiences — curated for those who have seen everything this world has to offer.
+        </p>
+
+        <div class="h-actions">
+          <a href="#destinations" class="btn-primary">
+            Explore Destinations
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#schedule" class="btn-sec">View Flight Schedule</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+
+    <!-- Key stats bar -->
+    <div class="h-stats" role="complementary" aria-label="Nova-K at a glance">
+      <div class="h-stat">
+        <div class="h-stat-v">847</div>
+        <div class="h-stat-l">Passengers Flown</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">4</div>
+        <div class="h-stat-l">Destinations</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">99.8%</div>
+        <div class="h-stat-l">Mission Success</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">12</div>
+        <div class="h-stat-l">Launches / Year</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       MARQUEE STRIP
+  ══════════════════════════════════════════ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="mq-track">
+      <span class="mq-item"><span class="mq-dot"></span>Earth Orbit</span>
+      <span class="mq-item"><span class="mq-dot"></span>Lunar Surface</span>
+      <span class="mq-item"><span class="mq-dot"></span>Mars Colony</span>
+      <span class="mq-item"><span class="mq-dot"></span>Titan Station</span>
+      <span class="mq-item"><span class="mq-dot"></span>Zero Gravity Suites</span>
+      <span class="mq-item"><span class="mq-dot"></span>EVA Spacewalks</span>
+      <span class="mq-item"><span class="mq-dot"></span>Orbital Sunrise</span>
+      <span class="mq-item"><span class="mq-dot"></span>Nova-K First Class</span>
+      <!-- Duplicate set for seamless loop -->
+      <span class="mq-item"><span class="mq-dot"></span>Earth Orbit</span>
+      <span class="mq-item"><span class="mq-dot"></span>Lunar Surface</span>
+      <span class="mq-item"><span class="mq-dot"></span>Mars Colony</span>
+      <span class="mq-item"><span class="mq-dot"></span>Titan Station</span>
+      <span class="mq-item"><span class="mq-dot"></span>Zero Gravity Suites</span>
+      <span class="mq-item"><span class="mq-dot"></span>EVA Spacewalks</span>
+      <span class="mq-item"><span class="mq-dot"></span>Orbital Sunrise</span>
+      <span class="mq-item"><span class="mq-dot"></span>Nova-K First Class</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       DESTINATIONS
+  ══════════════════════════════════════════ -->
+  <section id="destinations" class="sp" aria-labelledby="dest-h">
+    <div class="container">
+
+      <div class="reveal">
+        <p class="s-label">Destinations</p>
+        <h2 class="s-title" id="dest-h">Choose your<br /><em>destination</em></h2>
+        <p class="s-desc">Three worlds. Three entirely different realities. Each an experience no earthbound journey can match.</p>
+      </div>
+
+      <!-- Destination selector tabs -->
+      <nav class="dest-tabs reveal" style="margin-top:40px" aria-label="Destination selector">
+        <button class="d-tab active" onclick="switchDest(0)" aria-selected="true">
+          <span class="tab-dot"></span>Earth Orbit
+        </button>
+        <button class="d-tab" onclick="switchDest(1)" aria-selected="false">
+          <span class="tab-dot" style="background:var(--moon)"></span>The Moon
+        </button>
+        <button class="d-tab" onclick="switchDest(2)" aria-selected="false">
+          <span class="tab-dot" style="background:var(--mars)"></span>Mars
+        </button>
+        <button class="d-tab" onclick="switchDest(3)" aria-selected="false">
+          <span class="tab-dot" style="background:var(--blue)"></span>Titan
+        </button>
+      </nav>
+
+      <!-- ── EARTH ORBIT ── -->
+      <article class="dest-panel active reveal" id="dp-0" aria-label="Earth Orbit destination details">
+        <div class="dv-wrap">
+          <div class="dv-ring" style="width:340px;height:340px;--rspd:11s;--rds:6px;--rc:var(--gold)"></div>
+          <div class="dv-ring" style="width:420px;height:420px;--rspd:20s;--rds:5px;--rc:var(--teal);animation-direction:reverse;border-color:rgba(62,255,216,0.05)"></div>
+          <div class="dv-atmo" style="--atmo:radial-gradient(ellipse at 50% 50%,transparent 74%,rgba(100,170,255,0.07) 80%,rgba(60,120,240,0.1) 87%,transparent 95%);width:290px;height:290px"></div>
+          <div class="dv-planet" role="img" aria-label="Earth — blue marble seen from orbit"
+               style="width:250px;height:250px;
+                 --pBg:radial-gradient(circle at 36% 30%, rgba(140,210,255,0.9) 0%,rgba(55,130,225,0.75) 28%,rgba(15,55,165,0.9) 56%,rgba(3,10,48,1) 80%);
+                 --pShadow:inset -30px -24px 70px rgba(0,0,30,0.88),inset 12px 12px 40px rgba(120,180,255,0.12),0 0 80px rgba(55,120,220,0.2),0 0 200px rgba(25,65,175,0.08)">
+          </div>
+        </div>
+
+        <div class="di-info">
+          <div class="di-badge">
+            <span class="di-badge-dot" style="background:var(--teal);box-shadow:0 0 8px var(--teal)"></span>
+            Currently Available
+          </div>
+          <h3 class="di-name">Earth<br />Orbit</h3>
+          <p class="di-tagline">See the pale blue dot from the outside.</p>
+          <p class="di-desc">Experience the overview effect — the cognitive shift reported by every astronaut who has gazed at Earth from the void. Your private orbital suite rotates to give you a new sunrise every 92 minutes.</p>
+
+          <dl class="di-data">
+            <div class="di-field">
+              <dt class="di-f-label">Distance</dt>
+              <dd class="di-f-val">408 km</dd>
+              <div class="di-f-unit">Above sea level</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Gravity</dt>
+              <dd class="di-f-val">0.01 g</dd>
+              <div class="di-f-unit">Microgravity</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Temperature</dt>
+              <dd class="di-f-val">±120°C</dd>
+              <div class="di-f-unit">Day/Night swing</div>
+            </div>
+          </dl>
+
+          <div class="di-btns">
+            <a href="#schedule" class="btn-primary">View Flights</a>
+            <button class="btn-sec" onclick="openModal('Earth Orbit','NK-EO','$240,000')">Book Now</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── THE MOON ── -->
+      <article class="dest-panel" id="dp-1" aria-label="Lunar surface destination details">
+        <div class="dv-wrap">
+          <div class="dv-ring" style="width:340px;height:340px;--rspd:16s;--rds:5px;--rc:var(--moon)"></div>
+          <div class="dv-atmo" style="--atmo:radial-gradient(ellipse at 50% 50%,transparent 74%,rgba(168,180,192,0.04) 82%,transparent 95%);width:280px;height:280px"></div>
+          <div class="dv-planet" role="img" aria-label="The Moon — cratered grey surface"
+               style="width:240px;height:240px;
+                 --pBg:radial-gradient(circle at 40% 35%, rgba(200,215,228,0.9) 0%,rgba(140,158,172,0.85) 28%,rgba(80,92,104,0.9) 58%,rgba(25,30,38,1) 80%);
+                 --pShadow:inset -24px -20px 60px rgba(0,0,0,0.8),inset 8px 8px 30px rgba(255,255,255,0.07),0 0 70px rgba(160,180,200,0.12),0 0 180px rgba(100,120,140,0.05)">
+          </div>
+        </div>
+
+        <div class="di-info">
+          <div class="di-badge">
+            <span class="di-badge-dot" style="background:var(--moon);box-shadow:0 0 8px var(--moon)"></span>
+            Launching Q3 2026
+          </div>
+          <h3 class="di-name" style="color:var(--moon)">The<br />Moon</h3>
+          <p class="di-tagline" style="color:var(--moon)">Walk where only twelve humans ever have.</p>
+          <p class="di-desc">Touch the lunar regolith. Stand in the Sea of Tranquility. Watch a full Earth rise over the crater rim. Our Artemis Base camp offers pressurized suites and guided EVA excursions across ancient lava plains.</p>
+
+          <dl class="di-data">
+            <div class="di-field">
+              <dt class="di-f-label">Distance</dt>
+              <dd class="di-f-val">384,400 km</dd>
+              <div class="di-f-unit">From Earth</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Gravity</dt>
+              <dd class="di-f-val">0.165 g</dd>
+              <div class="di-f-unit">1/6th of Earth</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Temperature</dt>
+              <dd class="di-f-val">−173°C</dd>
+              <div class="di-f-unit">Night surface</div>
+            </div>
+          </dl>
+
+          <div class="di-btns">
+            <a href="#schedule" class="btn-primary">View Flights</a>
+            <button class="btn-sec" onclick="openModal('The Moon','NK-LN','$1,800,000')">Book Now</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── MARS ── -->
+      <article class="dest-panel" id="dp-2" aria-label="Mars colony destination details">
+        <div class="dv-wrap">
+          <div class="dv-ring" style="width:320px;height:320px;--rspd:14s;--rds:5px;--rc:var(--mars)"></div>
+          <div class="dv-atmo" style="--atmo:radial-gradient(ellipse at 50% 50%,transparent 74%,rgba(232,100,60,0.06) 82%,transparent 95%);width:268px;height:268px"></div>
+          <div class="dv-planet" role="img" aria-label="Mars — the red planet with polar ice cap"
+               style="width:228px;height:228px;
+                 --pBg:radial-gradient(circle at 36% 30%, rgba(230,150,105,0.92) 0%,rgba(185,85,52,0.85) 34%,rgba(125,48,26,0.94) 62%,rgba(36,14,8,1) 82%);
+                 --pShadow:inset -22px -18px 56px rgba(20,5,0,0.88),inset 10px 10px 30px rgba(255,180,100,0.12),0 0 70px rgba(210,80,42,0.18),0 0 180px rgba(150,50,20,0.07)">
+          </div>
+        </div>
+
+        <div class="di-info">
+          <div class="di-badge">
+            <span class="di-badge-dot" style="background:var(--mars);box-shadow:0 0 8px var(--mars)"></span>
+            2028 Expedition
+          </div>
+          <h3 class="di-name" style="color:var(--mars)">Mars</h3>
+          <p class="di-tagline" style="color:var(--mars)">Become one of the first hundred civilians on another world.</p>
+          <p class="di-desc">A 7-month voyage to humanity's second home. Stay at Nova-K's Olympus Base, with habitat domes, geological excursions, and views of the largest volcano in the solar system.</p>
+
+          <dl class="di-data">
+            <div class="di-field">
+              <dt class="di-f-label">Distance</dt>
+              <dd class="di-f-val">54.6M km</dd>
+              <div class="di-f-unit">Closest approach</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Gravity</dt>
+              <dd class="di-f-val">0.376 g</dd>
+              <div class="di-f-unit">38% of Earth</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Temperature</dt>
+              <dd class="di-f-val">−60°C</dd>
+              <div class="di-f-unit">Avg. surface</div>
+            </div>
+          </dl>
+
+          <div class="di-btns">
+            <a href="#schedule" class="btn-primary">View Flights</a>
+            <button class="btn-sec" onclick="openModal('Mars','NK-MX','$12,000,000')">Register Interest</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── TITAN ── -->
+      <article class="dest-panel" id="dp-3" aria-label="Titan station destination details">
+        <div class="dv-wrap">
+          <div class="dv-ring" style="width:310px;height:310px;--rspd:19s;--rds:5px;--rc:var(--blue)"></div>
+          <div class="dv-atmo" style="--atmo:radial-gradient(ellipse at 50% 50%,transparent 68%,rgba(180,160,80,0.12) 76%,rgba(150,130,60,0.08) 85%,transparent 95%);width:254px;height:254px"></div>
+          <div class="dv-planet" role="img" aria-label="Titan — Saturn's moon with thick orange atmosphere"
+               style="width:210px;height:210px;
+                 --pBg:radial-gradient(circle at 44% 36%, rgba(210,190,100,0.85) 0%,rgba(150,132,58,0.85) 24%,rgba(88,76,32,0.92) 54%,rgba(18,16,6,1) 80%);
+                 --pShadow:inset -18px -14px 46px rgba(8,6,0,0.88),inset 8px 8px 24px rgba(220,200,100,0.1),0 0 60px rgba(160,140,60,0.12),0 0 150px rgba(100,88,30,0.06)">
+          </div>
+        </div>
+
+        <div class="di-info">
+          <div class="di-badge">
+            <span class="di-badge-dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>
+            Concept — 2032
+          </div>
+          <h3 class="di-name" style="color:#90B0D8">Titan</h3>
+          <p class="di-tagline" style="color:#90B0D8">Sail methane seas under Saturn's rings.</p>
+          <p class="di-desc">The most alien environment humans will ever visit without leaving the solar system. Titan's thick nitrogen atmosphere, hydrocarbon lakes, and views of Saturn's rings make this the ultimate frontier voyage.</p>
+
+          <dl class="di-data">
+            <div class="di-field">
+              <dt class="di-f-label">Distance</dt>
+              <dd class="di-f-val">1.4B km</dd>
+              <div class="di-f-unit">From Earth (avg)</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Gravity</dt>
+              <dd class="di-f-val">0.14 g</dd>
+              <div class="di-f-unit">14% of Earth</div>
+            </div>
+            <div class="di-field">
+              <dt class="di-f-label">Temperature</dt>
+              <dd class="di-f-val">−179°C</dd>
+              <div class="di-f-unit">Surface average</div>
+            </div>
+          </dl>
+
+          <div class="di-btns">
+            <a href="#schedule" class="btn-primary">Express Interest</a>
+            <button class="btn-sec" onclick="openModal('Titan','NK-TI','Enquire')">Learn More</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       FLIGHT SCHEDULE
+  ══════════════════════════════════════════ -->
+  <section id="schedule" class="sp" aria-labelledby="sched-h">
+    <div class="container">
+
+      <div class="sched-top">
+        <div class="reveal">
+          <p class="s-label">Flight Schedule</p>
+          <h2 class="s-title" id="sched-h">Upcoming<br /><em>Departures</em></h2>
+        </div>
+        <div class="sched-filters reveal" role="group" aria-label="Filter flights by destination">
+          <button class="f-btn active" onclick="filterFlights('all',this)">All</button>
+          <button class="f-btn"        onclick="filterFlights('orbit',this)">Orbit</button>
+          <button class="f-btn"        onclick="filterFlights('moon',this)">Moon</button>
+          <button class="f-btn"        onclick="filterFlights('mars',this)">Mars</button>
+        </div>
+      </div>
+
+      <div class="table-glass reveal">
+        <table class="fl-table" role="table" aria-label="Upcoming Nova-K departures">
+          <thead>
+            <tr>
+              <th scope="col">Flight</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Departure</th>
+              <th scope="col">Duration</th>
+              <th scope="col">Class</th>
+              <th scope="col">From</th>
+              <th scope="col">Seats</th>
+              <th scope="col"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="ftbody"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SEAT SELECTOR
+  ══════════════════════════════════════════ -->
+  <section id="seats" class="sp" aria-labelledby="seat-h">
+    <div class="container">
+
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="s-label">Seat Selector</p>
+        <h2 class="s-title" id="seat-h">Choose your<br /><em>position</em></h2>
+        <p class="s-desc">Select your seat aboard the Nova-K Orbital Cruiser. Every position has a view of the cosmos.</p>
+      </div>
+
+      <div class="seat-layout reveal">
+
+        <!-- Seat map column -->
+        <div>
+          <div class="seat-top">
+            <div>
+              <div style="font-family:var(--font-d);font-size:22px;font-weight:300;letter-spacing:-.5px">NK Orbital Cruiser</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">NK-EO-2607 · Earth Orbit · Jul 26, 2026</div>
+            </div>
+            <div class="seat-legend" aria-label="Seat map legend">
+              <div class="leg-item">
+                <div class="leg-sq" style="background:rgba(62,255,216,0.08);border:1px solid rgba(62,255,216,0.2)"></div>
+                Available
+              </div>
+              <div class="leg-item">
+                <div class="leg-sq" style="background:linear-gradient(135deg,rgba(200,169,110,0.4),rgba(200,169,110,0.2));border:1px solid rgba(200,169,110,0.5)"></div>
+                Selected
+              </div>
+              <div class="leg-item">
+                <div class="leg-sq" style="background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.03)"></div>
+                Booked
+              </div>
+            </div>
+          </div>
+
+          <div class="ship-map" role="application" aria-label="Interactive cabin seat map">
+            <div class="ship-map-label">NOVA-K ORBITAL CRUISER — DECK PLAN</div>
+            <div class="ship-nose" aria-hidden="true"></div>
+
+            <!-- First Class cabin -->
+            <div class="cabin-blk">
+              <span class="cabin-label">First Class — Observation Deck</span>
+              <div class="sg" id="g-fc" style="grid-template-columns:repeat(5,auto);margin-top:22px"
+                   role="list" aria-label="First class seats"></div>
+            </div>
+
+            <!-- Business Class cabin -->
+            <div class="cabin-blk">
+              <span class="cabin-label">Business Class</span>
+              <div class="sg" id="g-bc" style="grid-template-columns:repeat(9,auto)"
+                   role="list" aria-label="Business class seats"></div>
+            </div>
+
+            <!-- Economy Plus cabin -->
+            <div class="cabin-blk">
+              <span class="cabin-label">Economy Plus</span>
+              <div class="sg" id="g-ec" style="grid-template-columns:repeat(11,auto)"
+                   role="list" aria-label="Economy plus seats"></div>
+            </div>
+
+            <div style="height:22px;border:1px solid rgba(255,255,255,0.03);border-top:none;border-radius:0 0 36px 36px;background:rgba(62,255,216,0.01)" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Booking summary panel -->
+        <aside class="book-panel" aria-label="Booking summary">
+          <h3 class="bp-title">Your Booking</h3>
+
+          <dl>
+            <div class="bp-field">
+              <dt class="bp-lbl">Flight</dt>
+              <dd class="bp-val">NK-EO-2607</dd>
+            </div>
+            <div class="bp-field">
+              <dt class="bp-lbl">Destination</dt>
+              <dd class="bp-val">Earth Orbit Station</dd>
+            </div>
+            <div class="bp-field">
+              <dt class="bp-lbl">Departure</dt>
+              <dd class="bp-val" style="font-size:15px">Jul 26, 2026 · 06:00 UTC</dd>
+            </div>
+            <div class="bp-field">
+              <dt class="bp-lbl">Selected Seat</dt>
+              <dd class="bp-val empty" id="sel-seat">No seat selected</dd>
+            </div>
+            <div class="bp-field">
+              <dt class="bp-lbl">Cabin Class</dt>
+              <dd class="bp-val empty" id="sel-cls">—</dd>
+            </div>
+          </dl>
+
+          <hr class="bp-div" />
+          <p class="bp-total-l">Total Price</p>
+          <p class="bp-total-v" id="bp-price">$0</p>
+
+          <button class="btn-primary btn-modal-full" id="proc-btn" onclick="proceedBook()" disabled style="opacity:.38">
+            Proceed to Booking
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="bp-note">Refundable deposit · Priority boarding · Dedicated mission advisor</p>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       ONBOARD EXPERIENCE
+  ══════════════════════════════════════════ -->
+  <section id="experience" class="sp" aria-labelledby="exp-h">
+    <div class="container">
+
+      <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto">
+        <p class="s-label" style="justify-content:center">Onboard Experience</p>
+        <h2 class="s-title" id="exp-h">Every detail<br /><em>considered</em></h2>
+      </div>
+
+      <div class="exp-grid">
+
+        <article class="exp-card reveal d1" style="--ec:rgba(62,255,216,0.25)">
+          <div class="exp-n" aria-hidden="true">01</div>
+          <span class="exp-icon" aria-hidden="true">🌌</span>
+          <h3 class="exp-title">Panoramic Viewports</h3>
+          <p class="exp-desc">Floor-to-ceiling sapphire glass in every suite. Watch the aurora from 400 km above. Sixteen sunrises in a single day.</p>
+          <div class="exp-glow" style="background:rgba(62,255,216,0.08)" aria-hidden="true"></div>
+        </article>
+
+        <article class="exp-card reveal d2" style="--ec:rgba(200,169,110,0.3)">
+          <div class="exp-n" aria-hidden="true">02</div>
+          <span class="exp-icon" aria-hidden="true">🍽️</span>
+          <h3 class="exp-title">Michelin-Grade Cuisine</h3>
+          <p class="exp-desc">Three Michelin-starred chefs developed a 14-course tasting menu adapted for zero gravity. Molecular gastronomy for the cosmos.</p>
+          <div class="exp-glow" style="background:rgba(200,169,110,0.06)" aria-hidden="true"></div>
+        </article>
+
+        <article class="exp-card reveal d3" style="--ec:rgba(74,159,255,0.25)">
+          <div class="exp-n" aria-hidden="true">03</div>
+          <span class="exp-icon" aria-hidden="true">🚶</span>
+          <h3 class="exp-title">EVA Spacewalks</h3>
+          <p class="exp-desc">Tethered to the station exterior — you float in open space. Nothing between you and the infinite. Guided by former NASA astronauts.</p>
+          <div class="exp-glow" style="background:rgba(74,159,255,0.06)" aria-hidden="true"></div>
+        </article>
+
+        <article class="exp-card reveal d1" style="--ec:rgba(200,100,255,0.2)">
+          <div class="exp-n" aria-hidden="true">04</div>
+          <span class="exp-icon" aria-hidden="true">🛏️</span>
+          <h3 class="exp-title">Zero-G Sleep Pods</h3>
+          <p class="exp-desc">Magnetic sleep systems, micro-adjusted pressure and temperature. Your body will feel more rested than it ever has on Earth.</p>
+          <div class="exp-glow" style="background:rgba(200,100,255,0.05)" aria-hidden="true"></div>
+        </article>
+
+        <article class="exp-card reveal d2" style="--ec:rgba(255,100,100,0.2)">
+          <div class="exp-n" aria-hidden="true">05</div>
+          <span class="exp-icon" aria-hidden="true">🏥</span>
+          <h3 class="exp-title">Medical Concierge</h3>
+          <p class="exp-desc">3-month pre-flight conditioning. Onboard physician. Remote-linked to Earth's top hospitals 24/7. Your health is mission objective one.</p>
+          <div class="exp-glow" style="background:rgba(255,100,100,0.05)" aria-hidden="true"></div>
+        </article>
+
+        <article class="exp-card reveal d3" style="--ec:rgba(62,255,216,0.25)">
+          <div class="exp-n" aria-hidden="true">06</div>
+          <span class="exp-icon" aria-hidden="true">📡</span>
+          <h3 class="exp-title">Earth Link</h3>
+          <p class="exp-desc">Low-latency laser-link keeps you connected. Video call family, stream media, share your view live — because some moments demand witnesses.</p>
+          <div class="exp-glow" style="background:rgba(62,255,216,0.05)" aria-hidden="true"></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       TESTIMONIAL
+  ══════════════════════════════════════════ -->
+  <section id="testimonial" aria-labelledby="test-h">
+    <div class="container">
+      <div class="test-card reveal">
+        <div class="test-glow" aria-hidden="true"></div>
+
+        <div class="test-stars" aria-label="5 out of 5 stars">
+          <span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+        </div>
+
+        <p class="qmark" aria-hidden="true">"</p>
+        <h2 id="test-h" class="sr-only">Passenger Testimonial</h2>
+
+        <blockquote class="test-q">
+          "There are no words. Every photograph of Earth I've ever seen — none of it prepares you. You see this brilliant blue sphere in absolute darkness, and you understand for the first time what fragile means."
+        </blockquote>
+
+        <p class="test-author-name">Arjun Mehta</p>
+        <p class="test-author-role">Passenger, NK-EO-2524 · Earth Orbit · September 2025</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       CTA — LAUNCH COUNTDOWN
+  ══════════════════════════════════════════ -->
+  <section id="cta" aria-labelledby="cta-h">
+    <div class="container">
+      <div class="cta-inner">
+
+        <div class="reveal">
+          <p class="cta-tag">Next launch window</p>
+          <div class="countdown" aria-label="Countdown to next Nova-K launch">
+            <div class="cd-chip">
+              <div class="cd-num" id="cd-d">094</div>
+              <div class="cd-lbl">Days</div>
+            </div>
+            <div class="cd-sep" aria-hidden="true">:</div>
+            <div class="cd-chip">
+              <div class="cd-num" id="cd-h">14</div>
+              <div class="cd-lbl">Hours</div>
+            </div>
+            <div class="cd-sep" aria-hidden="true">:</div>
+            <div class="cd-chip">
+              <div class="cd-num" id="cd-m">37</div>
+              <div class="cd-lbl">Mins</div>
+            </div>
+            <div class="cd-sep" aria-hidden="true">:</div>
+            <div class="cd-chip">
+              <div class="cd-num" id="cd-s">22</div>
+              <div class="cd-lbl">Secs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h2 class="cta-h" id="cta-h">Your seat<br /><em>awaits</em></h2>
+          <p class="cta-sub">A very small number of seats are available per year. Reserve yours with a fully refundable deposit.</p>
+          <div class="cta-actions">
+            <a href="#seats" class="btn-primary">Select Your Seat ↗</a>
+            <button class="btn-sec" onclick="openModal('Consultation','','')">Speak to an Advisor</button>
+          </div>
+          <p class="cta-note">Refundable deposit · Priority boarding · Dedicated mission advisor</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+
+      <!-- Footer CTA strip -->
+      <div class="foot-cta-strip">
+        <div class="foot-cta-left">
+          <p class="foot-cta-eyebrow">Ready to launch?</p>
+          <p class="foot-cta-headline">Begin your<br /><em>orbital journey</em> today.</p>
+        </div>
+        <div class="foot-cta-right">
+          <a href="#seats" class="btn-primary">Book a Voyage ↗</a>
+          <button class="btn-sec" onclick="openModal('Consultation','','')">Talk to an Advisor</button>
+        </div>
+      </div>
+
+      <!-- Main footer grid -->
+      <div class="foot-main">
+
+        <!-- Brand column -->
+        <div class="foot-col foot-col-brand">
+          <div class="foot-logo-wrap">
+            <a href="/" class="logo" aria-label="Nova-K Space Tourism">
+              <div class="logo-orb" aria-hidden="true"></div>
+              Nova-K
+            </a>
+          </div>
+          <p class="foot-brand-desc">
+            Humanity's most exclusive travel company. We take a very small number of exceptional guests beyond Earth's atmosphere each year. Est. Kennedy Space Complex, 2024.
+          </p>
+          <address class="foot-coords" aria-label="Launch facility coordinates">
+            <span class="foot-coords-dot" aria-hidden="true"></span>
+            28.5°N 80.6°W — Kennedy Space Complex, FL
+          </address>
+
+          <!-- Newsletter signup -->
+          <div class="foot-newsletter">
+            <p class="foot-nl-label">Mission briefings &amp; launch updates</p>
+            <div class="foot-nl-form" role="form" aria-label="Newsletter signup">
+              <label for="nl-email" class="sr-only">Email address</label>
+              <input class="foot-nl-input" id="nl-email" type="email" placeholder="Enter your email address" autocomplete="email" />
+              <button class="foot-nl-btn" aria-label="Subscribe to newsletter">Subscribe</button>
+            </div>
+          </div>
+
+          <!-- Certifications -->
+          <ul class="foot-badges" aria-label="Certifications and memberships" role="list">
+            <li class="foot-badge"><span class="foot-badge-icon" aria-hidden="true">🛡️</span>FAA Licensed</li>
+            <li class="foot-badge"><span class="foot-badge-icon" aria-hidden="true">✓</span>ISO 9001</li>
+            <li class="foot-badge"><span class="foot-badge-icon" aria-hidden="true">🌍</span>IATA Member</li>
+          </ul>
+        </div>
+
+        <!-- Destinations column -->
+        <div class="foot-col">
+          <div class="foot-col-inner">
+            <h4 class="foot-h">Destinations</h4>
+            <ul class="foot-links" role="list">
+              <li><a href="#destinations" class="foot-link">Earth Orbit Station</a></li>
+              <li><a href="#destinations" class="foot-link">Lunar Surface Base</a></li>
+              <li><a href="#destinations" class="foot-link">Mars — Olympus Colony</a></li>
+              <li><a href="#destinations" class="foot-link">Titan — 2032 Concept</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Travel column -->
+        <div class="foot-col">
+          <div class="foot-col-inner">
+            <h4 class="foot-h">Travel</h4>
+            <ul class="foot-links" role="list">
+              <li><a href="#schedule"    class="foot-link">Flight Schedule</a></li>
+              <li><a href="#seats"       class="foot-link">Seat Selector</a></li>
+              <li><a href="#experience"  class="foot-link">Onboard Experience</a></li>
+              <li><a href="#"            class="foot-link">Medical Requirements</a></li>
+              <li><a href="#"            class="foot-link">Pricing &amp; Deposits</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Company column -->
+        <div class="foot-col">
+          <div class="foot-col-inner">
+            <h4 class="foot-h">Company</h4>
+            <ul class="foot-links" role="list">
+              <li><a href="#" class="foot-link">About Nova-K</a></li>
+              <li><a href="#" class="foot-link">Safety Record</a></li>
+              <li><a href="#" class="foot-link">Press &amp; Media</a></li>
+              <li><a href="#" class="foot-link">Careers</a></li>
+              <li><a href="#" class="foot-link">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /foot-main -->
+
+      <!-- Bottom bar -->
+      <div class="foot-bottom">
+        <small class="foot-bottom-copy">
+          © 2026 Nova-K Space Tourism Inc. All rights reserved.<br />
+          All voyages subject to FAA mission clearance. Terms &amp; Privacy apply.
+        </small>
+        <div class="foot-bottom-center" aria-hidden="true">
+          <div class="foot-bottom-center-orb"></div>
+          NK–MMXXVI
+          <div class="foot-bottom-center-orb"></div>
+        </div>
+        <nav class="foot-soc" aria-label="Nova-K on social media">
+          <a href="#" class="foot-soc-link" aria-label="Nova-K on X / Twitter">𝕏</a>
+          <a href="#" class="foot-soc-link" aria-label="Nova-K on LinkedIn">in</a>
+          <a href="#" class="foot-soc-link" aria-label="Nova-K on Instagram">◈</a>
+          <a href="#" class="foot-soc-link" aria-label="Nova-K on YouTube">▷</a>
+        </nav>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════
+       BOOKING MODAL
+  ══════════════════════════════════════════ -->
+  <div class="modal-bg" id="modal-bg"
+       role="dialog" aria-modal="true"
+       aria-labelledby="modal-title"
+       aria-hidden="true">
+    <div class="modal">
+      <button class="modal-x" onclick="closeModal()" aria-label="Close booking modal">✕</button>
+
+      <h3 id="modal-title">Reserve Your Voyage</h3>
+      <p class="modal-sub" id="modal-sub">Secure your place with a refundable deposit</p>
+
+      <div class="m-field">
+        <label class="m-lbl" for="mn">Full Name</label>
+        <input class="m-inp" id="mn" type="text" placeholder="Your full legal name" autocomplete="name" />
+      </div>
+
+      <div class="m-row">
+        <div class="m-field">
+          <label class="m-lbl" for="me">Email</label>
+          <input class="m-inp" id="me" type="email" placeholder="you@domain.com" autocomplete="email" />
+        </div>
+        <div class="m-field">
+          <label class="m-lbl" for="mp">Phone</label>
+          <input class="m-inp" id="mp" type="tel"   placeholder="+1 000 000 0000" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="m-field">
+        <label class="m-lbl" for="md">Destination</label>
+        <select class="m-inp" id="md">
+          <option value="orbit">Earth Orbit — from $240,000</option>
+          <option value="moon">The Moon — from $1,800,000</option>
+          <option value="mars">Mars — from $12,000,000</option>
+          <option value="titan">Titan — Enquire</option>
+        </select>
+      </div>
+
+      <div class="m-field">
+        <label class="m-lbl" for="mc">Cabin Class</label>
+        <select class="m-inp" id="mc">
+          <option>Economy Plus</option>
+          <option>Business Class</option>
+          <option>First Class — Observation Deck</option>
+        </select>
+      </div>
+
+      <hr class="m-div" />
+
+      <div class="m-sum-row"><span>Refundable Deposit</span><span>$10,000</span></div>
+      <div class="m-sum-row"><span>Medical Screening</span><span>Included</span></div>
+      <div class="m-sum-row"><span>Mission Advisor</span><span>Complimentary</span></div>
+      <div class="m-sum-total"><span>Due Today</span><span>$10,000</span></div>
+
+      <button class="btn-primary btn-modal-full" onclick="confirmBook()">
+        Reserve My Seat
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Screen-reader only utility class -->
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+
+  <!-- Application script -->
+  <script src="nova-k.js"></script>
+
+</body>
+</html>
